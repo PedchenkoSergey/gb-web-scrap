@@ -149,3 +149,10 @@ JavaScript error: https://www.mvideo.ru/, line 1: Error:
 JavaScript error: https://www.mvideo.ru/, line 1: Error: 
 JavaScript error: https://www.mvideo.ru/, line 1: Error: 
 JavaScript warning: https://mc.yandex.ru/metrika/tag.js, line 18: WEBGL_debug_renderer_info is deprecated in Firefox and will be removed. Please use RENDERER.
+1650736727532	Marionette	INFO	Stopped listening on port 64956
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+1650736727801	Marionette	INFO	Stopped listening on port 52956
+console.warn: TopSitesFeed: Failed to fetch data from Contile server: NetworkError when attempting to fetch resource.
+
+###!!! [Parent][PImageBridgeParent] Error: RunMessage(msgname=PImageBridge::Msg_WillClose) Channel closing: too late to send/recv, messages will be lost
+
