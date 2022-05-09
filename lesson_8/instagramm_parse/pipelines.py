@@ -19,18 +19,19 @@ class InstagrammParsePipeline:
             if item.get('follower_to'):
                 collection.update_one(
                     {'username': db_user.get('username')},
-                    {'$set': {'follower_to': db_user.get('follower_to').extend(item.get('follower_to'))}}
+                    {'$set': {'follower_to': list(set(db_user.get('follower_to').extend(item.get('follower_to'))))}}
                 )
             if item.get('following_by'):
                 collection.update_one(
                     {'username': db_user.get('username')},
-                    {'$set': {'follower_to': db_user.get('follower_to').extend(item.get('follower_to'))}}
+                    {'$set': {'following_by': list(set(db_user.get('following_by').extend(item.get('following_by'))))}}
                 )
-
-        collection.insert_one(item)
+        else:
+            collection.insert_one(item)
         return item
 
 
+# Should install Pillow: pip install pillow:
 class InstagrammPhotosPipeline(ImagesPipeline):
     def get_media_requests(self, item, info):
         print("SAVING PHOTOS")

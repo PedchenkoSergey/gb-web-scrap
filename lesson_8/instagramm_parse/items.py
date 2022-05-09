@@ -16,3 +16,11 @@ class InstagrammParseItem(scrapy.Item):
     post_data = scrapy.Field()
     _id = scrapy.Field()
 
+
+class InstagrammPostItem(scrapy.Item):
+    user_id = scrapy.Field()
+    username = scrapy.Field()
+    photo_post = scrapy.Field()
+    likes = scrapy.Field()
+    post_data = scrapy.Field()
+    _id = scrapy.Field()
