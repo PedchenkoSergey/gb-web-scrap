@@ -12,8 +12,6 @@ class InstagrammParseItem(scrapy.Item):
     follower_to = scrapy.Field()
     following_by = scrapy.Field()
     photo = scrapy.Field()
-    likes = scrapy.Field()
-    post_data = scrapy.Field()
     _id = scrapy.Field()
 
 

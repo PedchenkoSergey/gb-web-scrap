@@ -14,19 +14,56 @@ class InstagrammParsePipeline:
 
     def process_item(self, item, spider):
         collection = self.db['users']
-        db_user = collection.find({'username': item.get('username')})
-        if db_user:
-            if item.get('follower_to'):
-                collection.update_one(
-                    {'username': db_user.get('username')},
-                    {'$set': {'follower_to': list(set(db_user.get('follower_to').extend(item.get('follower_to'))))}}
-                )
-            if item.get('following_by'):
-                collection.update_one(
-                    {'username': db_user.get('username')},
-                    {'$set': {'following_by': list(set(db_user.get('following_by').extend(item.get('following_by'))))}}
-                )
-        else:
+        if spider['name'] == 'followers':
+            db_user = collection.find({'username': item.get('username')})
+            if db_user:
+                if item.get('follower_to'):
+                    collection.update_one(
+                        {'username': db_user.get('username')},
+                        {'$set': {
+                            'follower_to': list(set(db_user.get('follower_to').extend(item.get('follower_to')))),
+                            'following_by': [],
+                            'user_id': item.get('user_id'),
+                            'photo': item.get('photo')
+
+                        }}
+                    )
+                    db_user_follower = collection.find({'username': item.get('follower_to')[0]})
+                    if db_user_follower:
+                        collection.update_one(
+                            {'username': item.get('follower_to')[0]},
+                            {'$set': {'following_by': list(
+                                set(db_user_follower.get('following_by').append(db_user.get('username'))))}}
+                        )
+                    else:
+                        collection.insert_one({
+                            'username': item.get('follower_to')[0],
+                            'following_by': [db_user.get('username')]
+                        })
+                if item.get('following_by'):
+                    collection.update_one(
+                        {'username': db_user.get('username')},
+                        {'$set': {
+                            'following_by': list(set(db_user.get('following_by').extend(item.get('following_by')))),
+                            'follower_to': [],
+                            'user_id': item.get('user_id'),
+                            'photo': item.get('photo')
+                        }}
+                    )
+                    db_user_following = collection.find({'username': item.get('following_by')[0]})
+                    if db_user_following:
+                        collection.update_one(
+                            {'username': item.get('following_by')[0]},
+                            {'$set': {'follower_to': list(
+                                set(db_user_following.get('follower_to').append(db_user.get('username'))))}}
+                        )
+                    else:
+                        collection.insert_one({
+                            'username': item.get('following_by')[0],
+                            'following_by': [db_user.get('username')]
+                        })
+
+        elif spider['name'] == 'followers':
             collection.insert_one(item)
         return item
 
