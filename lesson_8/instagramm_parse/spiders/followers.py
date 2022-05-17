@@ -1,4 +1,6 @@
 import json
+import os
+from dotenv import load_dotenv
 import re
 import scrapy
 from scrapy.http import HtmlResponse
@@ -13,8 +15,13 @@ class FollowersSpider(scrapy.Spider):
     allowed_domains = ['instagram.com']
     start_urls = ['https://www.instagram.com/']
     inst_login_link = 'https://www.instagram.com/accounts/login/ajax/'
-    # inst_login = 'maetview'
-    # inst_pwd = '#PWD_INSTAGRAM_BROWSER:10:1652125310:AepQAKBHk7R5ETXyZBFCvBne9g7WzEw15E8bRIjuj03qhHAIPU/QMBabgTCbYIhJy1UNxqopa26VXkQNuGAwyP6jSeaKNwbEn3pcj9CwvseCYSpc+36gj7fUIrhqn2uCh6nBrwQebbw6VhugTEqFYgGwfFZYfkYT'
+
+    dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+    if os.path.exists(dotenv_path):
+        load_dotenv(dotenv_path)
+
+    # inst_login = os.environ.get('inst_login')
+    # inst_pwd = os.environ.get('inst_pwd')
     inst_login = 'Onliskill_udm'
     inst_pwd = '#PWD_INSTAGRAM_BROWSER:10:1650388687:AUVQAPLsNiCtdG0b660bL/la/fAfzNJ0AaVNGPhAI7fwS9ANR85sT7Kjag60UVTeviSs34AXFch4cAYMc8Pq56W6i7ntwpu2ucSOa3aIY3LRVrPRqB2XvkxeB+KW6C2TQEPNVbnxpAqk8m4yOJg='
 
